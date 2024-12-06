@@ -1,0 +1,24 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Libro {
+  ISBN   String  @id @default(uuid())
+  Titulo String
+  Autor  String
+  Precio Float
+  Ventas Venta[]
+}
+
+model Venta {
+  ID_Venta    Int      @id @default(autoincrement())
+  ISBN        String
+  Fecha_Venta DateTime
+  Cantidad    Int
+  Libro       Libro    @relation(fields: [ISBN], references: [ISBN])
+}
